@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 from django.contrib.auth.hashers import make_password
 from . decoretor import *
-from drf_writable_nested import WritableNestedModelSerializer
+
 
 
 class SuperUserSerializer(serializers.ModelSerializer):
