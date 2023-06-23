@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Home Page{% endblock title %}
+
+{% block content %}
+<h3>{{request.user}}</h3>
+<table>
+    <tr>
+        <td><a href="{% url 'Add_Student' %}">Manage Student </a></td>
+        <td><a href="">Manage Teacher </a></td>
+        <td><a href="">Manage Hod     </a></td>
+        <td><a href="{% url 'viewCourse' %}">Manage Course  </a></td>
+    </tr>
+</table>
+{% endblock content %}

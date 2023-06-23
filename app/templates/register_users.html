@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+register new users
+{% endblock title %}
+{% block content %}
+
+{% comment %} {% include 'nav.html' %} {% endcomment %}
+<h2>Register Students</h2>
+{% include 'message.html' %}
+<form action="" method="POST" novalidate>
+    {% csrf_token %}
+
+    
+  {{form.as_p}}
+
+{% if form.errors %}
+<p>username or password not correct</p>
+{% endif %}
+<a href="{% url 'UserLogin' %}">Login</a>
+<input type="submit" value="Register">
+</form>
+<br><br>
+{% endblock content %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Student
+{% endblock title %}
+{% block content %}
+<h3>Add Student</h3>
+
+<form action="" method ="POST">
+{% csrf_token %}
+    <p>
+        <label for="id_username">Username:</label>
+        <input type="text" name="username" maxlength="150" autofocus required id="id_username">
+        
+          <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+        
+      </p>
+     
+      <p>
+        <label for="id_email">Email address:</label>
+        <input type="email" name="email" maxlength="254" id="id_email">       
+        
+      </p>
+          
+      <p>
+        <label for="id_phone">Phone:</label>
+        <input type="text" name="phone" maxlength="12" required id="id_phone">
+     
+      </p>
+      <p>
+        <label for="id_roll_no">Roll no:</label>
+        <input type="number" name="roll_no" maxlength="12" required id="id_roll_no">
+     
+      </p>
+      <p>
+        <label for="std">Choose a Standerd:</label>
+            <select name="std" id="std">
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <br><br>
+      </p>
+      <p>
+        <label for="std">Choose a Course:</label>
+            <select name="course" id="course">
+                {% for c in course %}
+                <option value="{{c}}">{{c}}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+      </p>
+      <p>
+        <label for="id_address">Address:</label>
+        <textarea name="address" cols="40" rows="5" required id="id_address">
+    </textarea>
+ 
+      </p>
+      
+      <p>
+        <label for="id_password1">Password:</label>
+        <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
+        
+          <span class="helptext"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></span>
+        
+      </p>
+     
+      
+      <p>
+        <label for="id_password2">Password confirmation:</label>
+        <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+        
+          <span class="helptext">Enter the same password as before, for verification.</span>
+               
+      </p>
+      <input type="submit" value="submit">
+</form>
+
+
+<br><br>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Stander</th>
+        <th>Course</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{i.name.id}}</td>
+        <td>{{i.name.username}}</td>
+        <td>{{i.name.email}}</td>
+        <td>{{i.std}}</td>
+        <td>{{i.related_course.name}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}
