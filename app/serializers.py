@@ -251,7 +251,7 @@ class StudentBulkCreateSerializer(serializers.ListSerializer):
 
 #STUDENT CREATE
 class StudentSerializer(serializers.ModelSerializer):
-    print("19 ========")
+    print("19 ======== 19")
     name = UserSerializer()
     related_course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
     print("22")
