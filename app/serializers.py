@@ -24,17 +24,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id','username','email','phone','password','address']
     
-    def validate(self, attrs):
-        username = attrs.get('username')
-        email = attrs.get('email')
-        
-        if self.instance and self.instance.username != username and CustomUser.objects.filter(username=username).exists():
-            raise serializers.ValidationError("Username already exists")
-        
-        if self.instance and self.instance.email != email and CustomUser.objects.filter(email=email).exists():
-            raise serializers.ValidationError("Email already exists")
-        
-        return attrs
     
 class CouserBulkUpdateSerializer(serializers.ListSerializer):
     def update(self, instance, validated_data):
@@ -233,7 +222,6 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
                     serializer.save()
                     update_list.append(serializer.instance)
         return update_list
-    
 class StudentBulkCreateSerializer(serializers.ListSerializer):
     
     def create(self, validated_data):
