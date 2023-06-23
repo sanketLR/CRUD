@@ -10,7 +10,7 @@ from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 from django.contrib.auth.hashers import make_password
 from . decoretor import *
 
-
+#new line added
 
 class SuperUserSerializer(serializers.ModelSerializer):
    
