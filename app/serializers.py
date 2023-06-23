@@ -185,7 +185,7 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
             if name_serializer.is_valid():
                 name_serializer.save()
             else:
-                
+                # 
                 pass
 
         return super().update(instance, validated_data)
@@ -251,7 +251,7 @@ class StudentBulkCreateSerializer(serializers.ListSerializer):
 
 #STUDENT CREATE
 class StudentSerializer(serializers.ModelSerializer):
-    print("19")
+    print("19 ========")
     name = UserSerializer()
     related_course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all())
     print("22")
