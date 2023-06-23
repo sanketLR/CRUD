@@ -211,16 +211,27 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
     def bulk_update(self, queryset, validated_data_list):
+        # print("queryset",queryset)
+        print("bulk hit")
+        print("validated_data_list", validated_data_list)
+        # for i in validated_data_list:
+        #     print("THIS I",i)
         instance_dict = {instance.id: instance for instance in queryset}
+        print("instance_dict",instance_dict)
         update_list = []
+
         for validated_data in validated_data_list:
             instance_id = validated_data['id']
             instance = instance_dict.get(instance_id)
+            print("instance :", instance)
             if instance:
                 serializer = self.__class__(instance, data=validated_data, partial=True)
+                # print("========self.__class__===========",self.__class__)
                 if serializer.is_valid():
+                    print("SERIALIZER", serializer)
                     serializer.save()
                     update_list.append(serializer.instance)
+        print("=>>> update_list <<<<<<", update_list)
         return update_list
     
 class StudentBulkCreateSerializer(serializers.ListSerializer):

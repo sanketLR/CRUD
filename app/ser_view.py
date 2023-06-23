@@ -171,10 +171,11 @@ class Student_ViewPost(APIView):
     
     def put(self, request):
         data = request.data
-
+        for i in data:
+            print(i['id'])
         student_ids = [item['id'] for item in data]
         queryset = Student.objects.filter(id__in=student_ids)
-        
+        print("queryset",queryset)
         serializer = StudentUpdateSerializer()
         updated_instances = serializer.bulk_update(queryset, data)
 
