@@ -222,6 +222,7 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
                     serializer.save()
                     update_list.append(serializer.instance)
         return update_list
+    
 class StudentBulkCreateSerializer(serializers.ListSerializer):
     
     def create(self, validated_data):
