@@ -147,27 +147,42 @@ class Student_ViewPost(APIView):
         else:
             return Response({'msg':'ERROR','payload':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
 
+    # def put(self, request):
+    #     data = request.data
+
+    #     customUser_id = []
+    #     studUser_id = []
+
+    #     for stud_id in data:
+    #         studUser_id.append(stud_id['id'])
+
+
+    #     studentobj = [Student.objects.filter(id__in = studUser_id)]
+    #     # print(studentobj)
+    #     # print(data)
+    #     serializer = StudentUpdateSerializer(studentobj, data = data, many=True)
+        
+    #     if serializer.is_valid():
+    #         # print("➡ serializer :", serializer)
+    #         serializer.save()
+    #         return Response({'msg':'Student data updated', 'payload':serializer.data, 'status':status.HTTP_200_OK})
+    #     else:
+    #         return Response({'msg':'ERROR', 'payload':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
+    
     def put(self, request):
         data = request.data
 
-        customUser_id = []
-        studUser_id = []
-
-        for stud_id in data:
-            studUser_id.append(stud_id['id'])
-
-
-        studentobj = [Student.objects.filter(id__in = studUser_id)]
-        # print(studentobj)
-        # print(data)
-        serializer = StudentUpdateSerializer(studentobj, data = data, many=True)
+        student_ids = [item['id'] for item in data]
+        queryset = Student.objects.filter(id__in=student_ids)
         
-        if serializer.is_valid():
-            # print("➡ serializer :", serializer)
-            serializer.save()
-            return Response({'msg':'Student data updated', 'payload':serializer.data, 'status':status.HTTP_200_OK})
+        serializer = StudentUpdateSerializer()
+        updated_instances = serializer.bulk_update(queryset, data)
+
+        if updated_instances:
+            updated_serializer = StudentViewSerializer(updated_instances, many=True)
+            return Response({'msg': 'Student data updated', 'payload': updated_serializer.data, 'status': status.HTTP_200_OK})
         else:
-            return Response({'msg':'ERROR', 'payload':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
+            return Response({'msg': 'No students updated', 'status': status.HTTP_400_BAD_REQUEST})
             
 #PERTICULAR UPDATE
 class Student_StdGet(APIView):
