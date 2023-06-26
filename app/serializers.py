@@ -129,19 +129,21 @@ class SubjectBulkCreateSerializer(serializers.ListSerializer):
         return Subject.objects.bulk_create(subject_data) 
 
 class SubjectSerializer(serializers.ModelSerializer):
-    course = CourseSerializer()
+    # course = CourseSerializer()
+    course = serializers.PrimaryKeyRelatedField( queryset= Subject.objects.all())
+
     class Meta:
         model = Subject
-        fields = ['id','name','course']
-        depth = 1
+        fields =['id','name', 'course']
+        # depth = 1
         list_serializer_class = SubjectBulkCreateSerializer
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Subject.objects.all(),
-                fields=['name'],
-                message='Subject with this name already exists'
-            )
-        ]        
+        # validators = [
+        #     UniqueTogetherValidator(
+        #         queryset=Subject.objects.all(),
+        #         fields=['name'],
+        #         message='Subject with this name already exists'
+        #     )
+        # ]        
 
 class StudentBulkUpdateSerializer(serializers.ListSerializer):
     def update(self, instance, validated_data):

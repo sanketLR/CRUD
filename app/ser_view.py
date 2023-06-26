@@ -8,6 +8,7 @@ from rest_framework import generics
 from django.db import connection
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from rest_framework.decorators import api_view
 
 #ADMIN
 class User_ViewPost(APIView):
@@ -230,8 +231,10 @@ class SubjectUpdate(APIView):
         
     def post(self, request):
         data = request.data
+        print("DATA",data)
         serializer = SubjectSerializer(data = data, many=True)
         if serializer.is_valid():
+            print("serializer",serializer)
             serializer.save()
             return Response({'msg':'Subject add', 'payload':serializer.data,'status':status.HTTP_200_OK})
         else:
@@ -250,6 +253,26 @@ class SubjectUpdate(APIView):
             return Response({'msg':'Updated', 'payload':serializer.data, 'status':status.HTTP_200_OK})
         else:
             return Response({'msg':'ERROR', 'payload':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
+
+
+#FUNCTION BASE VIEW
+
+@api_view(['GET','POST'])
+def SubjectFunctionBase(request):
+    if request.method == "GET":
+        obj = Subject.objects.all()
+        
+        serializer = SubjectSerializer(obj, many=True)
+        return Response({'msg':'Data', 'payload':serializer.data, 'status':status.HTTP_200_OK})
+
+    elif request.method == 'POST':
+        serializer = SubjectSerializer(data= request.data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'New Record add','payload':serializer.data, 'status':status.HTTP_201_CREATED})
+        else:
+            return Response({'msg':'ERROR','payload':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
+
 
 # class Student_ViewPost(APIView):
 #     def get(self, request):

@@ -44,7 +44,7 @@ urlpatterns = [
     #SUBJECT
     path('SubjectUpdate/',SubjectUpdate.as_view(), name="SubjectUpdate"),
 
-
+    path('SubjectFunctionBase/',SubjectFunctionBase,name='SubjectFunctionBase'),
 
 
     # path('CourseViewUpdate',CourseViewUpdate.as_view(), name="CourseViewUpdate"),
