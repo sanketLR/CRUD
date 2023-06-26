@@ -200,8 +200,12 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
         fields = ['related_course', 'name', 'roll_no', 'user_tag', 'std']
 
     def update(self, instance, validated_data):
+        print("UPDATE ======= instance,",instance)
+        # for i in instance:
+        #     print(i)
+        #     
         name_data = validated_data.pop('name', None)
-
+        # print(name_data)
         if name_data:
             user_instance = instance.name
             user_serializer = UserSerializer(user_instance, data=name_data, partial=True)
@@ -210,13 +214,13 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)
 
-    def bulk_update(self, queryset, validated_data_list):
+    def studupdate(self, queryset, validated_data_list):
         # print("queryset",queryset)
         print("bulk hit")
         print("validated_data_list", validated_data_list)
         # for i in validated_data_list:
         #     print("THIS I",i)
-        instance_dict = {instance.id: instance for instance in queryset}
+        instance_dict = {instance.id: instance for instance in queryset} #student
         print("instance_dict",instance_dict)
         update_list = []
 

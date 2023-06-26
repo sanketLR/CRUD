@@ -177,7 +177,7 @@ class Student_ViewPost(APIView):
         queryset = Student.objects.filter(id__in=student_ids)
         print("queryset",queryset)
         serializer = StudentUpdateSerializer()
-        updated_instances = serializer.bulk_update(queryset, data)
+        updated_instances = serializer.studupdate(queryset, data)
 
         if updated_instances:
             updated_serializer = StudentViewSerializer(updated_instances, many=True)
